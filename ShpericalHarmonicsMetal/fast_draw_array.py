@@ -56,17 +56,7 @@ class Main(QMainWindow):
         self.setCentralWidget(OpenGLWidget(self, sh))
         self.show()
 
-    def create_list(self):
-        self.listwidget = QListWidget()
-        self.listwidget.insertItem(0, "Red")
-        self.listwidget.insertItem(1, "Orange")
-        self.listwidget.insertItem(2, "Blue")
-        self.listwidget.insertItem(3, "White")
-        self.listwidget.insertItem(4, "Green")
-        # self.listwidget.clicked.connect(self.clicked)
-        self.layout.addChildWidget(self.listwidget)
-
-
+   
 if __name__ == '__main__':
     from sh_codes import spherical_harmonics_codes
 
