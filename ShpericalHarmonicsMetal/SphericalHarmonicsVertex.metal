@@ -41,10 +41,12 @@ kernel void sphericalHarmonicsVertex(device Vertex*_vertex[[buffer(0)]], // out-
                                uint2 position [[thread_position_in_grid]] ) // x,y
 {
     uint index = position.x + position.y * resolution; // vertex index in res*res space
-    generateVertex(position.x, position.y, resolution, m, colourmap, _vertex + index);
+    uint x=position.x, y=position.y + ((~index) & 1); // traingle_fan
+
+    generateVertex(x, y , resolution, m, colourmap, _vertex + index);
 }
 
-
+// generates i,j from resol x resol grid vertex ( coord, normal, texture, color )
 void generateVertex(uint i, uint j, const uint resolution, const float device *m, const uint colourmap,
               device Vertex*_vertex) {
     
