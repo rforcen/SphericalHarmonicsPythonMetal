@@ -22,7 +22,7 @@ class RendererGL(QOpenGLWidget):
         pass
 
     def init(self, gl):
-       pass
+        pass
 
     def minimumSizeHint(self):
         return QSize(50, 50)
@@ -75,12 +75,18 @@ class RendererGL(QOpenGLWidget):
 
     def resizeGL(self, width, height):
         side = min(width, height)
-        if side < 0: return
+        if side <= 0: return
+        aspectRatio = width / height if height != 0 else 1
 
         self.gl.glViewport(0, 0, side, side)
         self.gl.glMatrixMode(self.gl.GL_PROJECTION)
         self.gl.glLoadIdentity()
-        self.gl.glOrtho(-0.5, +0.5, +0.5, -0.5, 4.0, 150.0)
+
+        if (width >= height): # keep aspect ratio
+            self.gl.glOrtho(-0.5 * aspectRatio, +0.5 * aspectRatio, +0.5, -0.5, 4.0, 150.0)
+        else:
+            self.gl.glOrtho(-0.5, +0.5, +0.5, -0.5, 4.0 / aspectRatio, 150.0)
+
         self.gl.glMatrixMode(self.gl.GL_MODELVIEW)
 
     def mousePressEvent(self, event):
@@ -141,3 +147,6 @@ class RendererGL(QOpenGLWidget):
         gl.glEnable(gl.GL_LINE_SMOOTH)
         gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
         gl.glHint(gl.GL_POLYGON_SMOOTH_HINT, gl.GL_NICEST)
+
+    def scale(self, gl, scale):
+        gl.glScalef(scale, scale, scale)
