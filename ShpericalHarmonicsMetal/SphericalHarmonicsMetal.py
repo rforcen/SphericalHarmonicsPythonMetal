@@ -1,7 +1,7 @@
 '''
 python interface to metal app.
 '''
-import runmetal
+from py_metalMT import py_metalMT
 import numpy as np
 
 
@@ -19,7 +19,7 @@ class SphericalHarmonicsMetal():
         def code_2_list(code):
             return list(map(float, str(code)))
 
-        self.pm = runmetal.PyMetal()
+        self.pm = py_metalMT()
         self.pm.opendevice()
         self.pm.openlibrary(filename='SphericalHarmonicsVertex.metal') # file
         self.fn = self.pm.getfn("sphericalHarmonicsVertex") # func. name
